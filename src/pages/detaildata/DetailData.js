@@ -2,149 +2,41 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  TextInput,
-  TouchableHighlight,
-  Button,
   Image,
-  Alert,
   StyleSheet
 } from "react-native";
-import axios from "axios";
 
-const EditData = ({ route, navigation }) => {
-  const [id, setId] = useState("")
-  const [nama, setNama] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const [jurusan, setJurusan] = useState("");
-  const { itemId, itemNama, itemAlamat, itemJurusan, itemImage } = route.params;
+const DetailData = ({ route, navigation }) => {
+    const { itemId, itemNama, itemAlamat, itemJurusan, itemImage } = route.params;
+  const [id, setId] = useState(itemId)
+  const [nama, setNama] = useState(itemNama);
+  const [alamat, setAlamat] = useState(itemJurusan);
+  const [jurusan, setJurusan] = useState(itemAlamat);
   const [imagePicture, setimagePicture] = useState(`http://192.168.43.91/CI-tes/uploads/${itemImage}`);
   const [users, setUsers] = useState([]);
   
-  const update  =() => {
-    let file = {
-        uri: imagePicture, 
-        type: 'image/jpg', 
-        name: imagePicture
-};
-    const data = new FormData();
-    data.append('id', itemId)
-    data.append('nama', nama);
-    data.append('alamat', alamat);
-    data.append('jurusan', jurusan);
-    data.append('image', file);
-
-    console.log("ini form data :", data);
-    console.log("ini form data :", file.uri);
-
-    
-    axios.post("http://192.168.43.91/CI-tes/api/mahasiswas/update", data, {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    })
-            .then(function (response) {
-              alert(JSON.stringify(response))
-            })
-            .catch(function (error) {
-              alert(error)
-              console.log(error);
-            });
-}
-
-
-
-  // const update = () => {
-  //   const dataa = {
-  //     id: itemId,
-  //     nama,
-  //     alamat,
-  //     jurusan
-  //   };
-  //   console.log(dataa.id);
-  //   axios
-  //     .post(
-  //       "http://192.168.43.91/CI-tes/api/mahasiswas/update",
-  //       qs.stringify(dataa)
-  //     )
-  //     .then(function (response) {
-  //       alert(JSON.stringify(response));
-  //     })
-  //     .catch(function (error) {
-  //       alert(error);
-  //       console.log(dataa);
-  //       console.log(error);
-  //     });
-  // };
-
-
-  useEffect(() => {
-    getData();
-},[]);
-
-const getData = () => {
-  axios.get(`http://192.168.43.91/CI-tes/api/mahasiswas/getId/${itemId}`)
-  .then(res => {
-      const mahasiswa= res.data.data;
-      console.log("tes : "+JSON.stringify(res.data.data));
-      setUsers(mahasiswa);
-  })
-}
-
-
   return (
     <View>
       <Text style={{ textAlign: "center", margin: 10 }}>  
-        Form Input Mahasiswa
+        Detail Mahasiswa
       </Text>
-      {users.map((mahasiswa) => {
-                return (
-                  <View>
-                  <TextInput
-                  style={{ borderWidth: 1, marginBottom: 5 }}
-                  value={mahasiswa.id}
-                  key={mahasiswa.id}
-                   onChangeText={(text) => setId(text)}
-                >
-                  
-                </TextInput>
-                <TextInput
-                  style={{ borderWidth: 1, marginBottom: 5 }}
-                  onChangeText={(text) => setNama(text)}
-                  >
-                   {mahasiswa.nama}
-                </TextInput>
-                <TextInput
-                  style={{ borderWidth: 1, marginBottom: 5 }}
-                  onChangeText={(text) => setAlamat(text)}
-                  >
-                  {mahasiswa.alamat}
-                </TextInput>
-                <TextInput
-                  style={{ borderWidth: 1, marginBottom: 5 }}
-                  onChangeText={(text) => setJurusan(text)}
-                  >
-                  {mahasiswa.jurusan}
-                </TextInput>
-                <View style={{flexDirection: 'row'}}> 
+  <Text style={{ textAlign: "left", margin: 10 }} key={id}>id : {id}</Text>
+                <Text style={{ textAlign: "left", margin: 10 }}> Nama : {nama}</Text>
+                <Text style={{ textAlign: "left", margin: 10 }}>Jurusan : {jurusan}</Text>
+                <Text style={{ textAlign: "left", margin: 10 }}>Alamat : {alamat}</Text>
+                <View style={{flexDirection: 'row'}}>
+                <Text style={{ textAlign: "left", margin: 10 }}>Foto </Text>
                 <Image
                 style={{margin:10, width: 100, height: 100, marginLeft: 20, marginTop:10}}
                 source={{uri: imagePicture}} />
-                <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 20, textAlign:'center', marginTop: 20}} 
-                onPress={chooseFotoFromLibrary}>
-                  Ganti Gambar
-                  </Text>
+
                 </View>
-                </View>   
-                       )
-                })}
-      <TouchableHighlight onPress={update} style={styles.btnSimpan}>
-        <Text style={styles.textBtn}>UPDATE</Text>
-      </TouchableHighlight>
+     
     </View>
   );
 };
 
-export default EditData;
+export default DetailData;
 
 const styles = StyleSheet.create({
   btnSimpan: {
