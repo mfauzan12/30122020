@@ -12,7 +12,7 @@ const DetailData = ({ route, navigation }) => {
   const [nama, setNama] = useState(itemNama);
   const [alamat, setAlamat] = useState(itemJurusan);
   const [jurusan, setJurusan] = useState(itemAlamat);
-  const [imagePicture, setimagePicture] = useState(`http://192.168.43.91/CI-tes/uploads/${itemImage}`);
+  const [imagePicture, setimagePicture] = useState(`http://192.168.43.14/backend_CRUD_ReactNative/uploads/${itemImage}`);
   const [users, setUsers] = useState([]);
   
   return (

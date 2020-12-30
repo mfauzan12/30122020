@@ -18,7 +18,7 @@ const EditData = ({ route, navigation }) => {
   const [alamat, setAlamat] = useState("");
   const [jurusan, setJurusan] = useState("");
   const { itemId, itemNama, itemAlamat, itemJurusan, itemImage } = route.params;
-  const [imagePicture, setimagePicture] = useState(`http://192.168.43.91/CI-tes/uploads/${itemImage}`);
+  const [imagePicture, setimagePicture] = useState(`http://192.168.43.14/backend_CRUD_ReactNative/uploads/${itemImage}`);
   const [users, setUsers] = useState([]);
   
   const update  =() => {
@@ -28,7 +28,7 @@ const EditData = ({ route, navigation }) => {
     data.append('alamat', alamat);
     data.append('jurusan', jurusan);
     
-    axios.post("http://192.168.43.91/CI-tes/api/mahasiswas/update", data, {
+    axios.post("http://192.168.43.14/backend_CRUD_ReactNative/api/mahasiswas/update", data, {
         headers: {
             'content-type': 'multipart/form-data'
         }
@@ -48,7 +48,7 @@ const EditData = ({ route, navigation }) => {
 },[]);
 
 const getData = () => {
-  axios.get(`http://192.168.43.91/CI-tes/api/mahasiswas/getId/${itemId}`)
+  axios.get(`http://192.168.43.14/backend_CRUD_ReactNative/api/mahasiswas/getId/${itemId}`)
   .then(res => {
       const mahasiswa= res.data.data;
       console.log("tes : "+JSON.stringify(res.data.data));

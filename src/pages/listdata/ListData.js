@@ -42,7 +42,7 @@ const ListData = ({navigation}) => {
     
 
     const getData = () => {
-        axios.get("http://192.168.43.91/CI-tes/api/mahasiswas/")
+        axios.get("http://192.168.43.14/backend_CRUD_ReactNative/api/mahasiswas")
         .then(res => {
             const mahasiswa= res.data.data;
             console.log("tes : "+JSON.stringify(mahasiswa));
@@ -56,7 +56,7 @@ const ListData = ({navigation}) => {
 
     const deleteItem = (item) => {
         console.log(item)
-        axios.delete(`http://192.168.43.91/CI-tes/api/mahasiswas/delete/${item.id}`)
+        axios.delete(`http://192.168.43.14/backend_CRUD_ReactNative/api/mahasiswas/delete/${item.id}`)
         .then(function (response) {
           alert(JSON.stringify(response))
           getData();
@@ -79,7 +79,7 @@ const ListData = ({navigation}) => {
                             <View style={styles.itemContainer}>
                             <Image
                             style={{width: 100, height: 100, marginLeft: 20, marginTop:10}}
-                            source={{uri: `http://192.168.43.91/CI-tes/uploads/${mahasiswa.image}`}}/>
+                            source={{uri: `http://192.168.43.14/backend_CRUD_ReactNative/uploads/${mahasiswa.image}`}}/>
                             <View style={styles.desc}>
                                 <TouchableOpacity onPress={() => gotoDetail(mahasiswa)}>
                                 <Text style={{fontSize: 20, fontWeight: 'bold'}}>Nama Lengkap : {mahasiswa.nama}</Text>
@@ -144,4 +144,3 @@ const styles = StyleSheet.create({
           flex:1
       }
 })
-
