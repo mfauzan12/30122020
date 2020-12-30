@@ -23,13 +23,29 @@ const ListData = ({navigation}) => {
           });
     }
 
+    const goToEdit = (item) => {
+        console.log( "select item" + item)
+        setSelectedUser(item);
+        navigation.navigate("Edit Data",  {
+            itemId: item.id,
+            itemNama: item.nama,
+            itemAlamat: item.alamat,
+            itemJurusan : item.jurusan,
+            itemImage : item.image
+          });
+        // setId(item.id);
+        // setNama(item.nama);
+        // setAlamat(item.alamat);
+        // setJurusan(item.jurusan);
+        // setButton("Update");
+    }
     
 
     const getData = () => {
         axios.get("http://192.168.43.91/CI-tes/api/mahasiswas/")
         .then(res => {
             const mahasiswa= res.data.data;
-            console.log("tes : "+JSON.stringify(res.data.data));
+            console.log("tes : "+JSON.stringify(mahasiswa));
             setUsers(mahasiswa);
         })
         .catch(function (error) {
@@ -72,7 +88,13 @@ const ListData = ({navigation}) => {
                                 <Text>Jurusan Lengkap: {mahasiswa.jurusan}</Text>
                                
                             </View>
-                            <View style={{flexDirection: 'row'}}>
+                            
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={()=> goToEdit(mahasiswa)}>
+                                <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 150}}>UBAH</Text>
+                            </TouchableOpacity>
+
                                 <TouchableOpacity onPress={() => Alert.alert('Peringatan', 'Apakah anda ingin menghapus data ini?', 
                         [
                             {
@@ -82,11 +104,10 @@ const ListData = ({navigation}) => {
                                 text: "Ya", onPress: () => deleteItem(mahasiswa)
                             },
                         ])}>
-                            <Text style={styles.delete}>X</Text>
+                            <Text style={styles.delete}>HAPUS</Text>
 
                             </TouchableOpacity>
                                 </View>
-                        </View>
                     </CardView>
                        )
                 })}
@@ -111,7 +132,8 @@ const styles = StyleSheet.create({
           fontSize: 20,
           fontWeight : 'bold',
           color : 'red',
-          marginRight:10
+          marginRight:10,
+          marginLeft: 20
       },
       itemContainer : {
           flexDirection:'row',
